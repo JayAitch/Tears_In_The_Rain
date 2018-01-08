@@ -99,6 +99,7 @@ public class CarSprite extends BonusSprite {
                 //crash rotations
                 .to(tweenData, TweenDataAccessor.TYPE_ROTATION,50f).delay(crashTimer)
                 .target(120).start().start(tweenManager)
+
                 .to(tweenData, TweenDataAccessor.TYPE_ROTATION,350f).delay(crashTimer+ 170)
                 .target(330).start().start(tweenManager)
 
