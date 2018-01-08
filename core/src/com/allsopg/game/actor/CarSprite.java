@@ -25,24 +25,26 @@ public class CarSprite extends BonusSprite {
     private Array<TextureAtlas.AtlasRegion> regions;
     private Array<TextureAtlas.AtlasRegion> idleRegion;
     private Array<TextureAtlas.AtlasRegion> deathRegion;
+    private float StateTimer;
+    private Boolean dead;
     public CarSprite(Texture t) {
         super(t);
-       // String atlasLocation = "gfx/MobCar/mob_car.atlas";
+        // String atlasLocation = "gfx/MobCar/mob_car.atlas";
         Vector2 position = new Vector2(5, randomY());
-     //   Animation.PlayMode okayMode = Animation.PlayMode.LOOP;
+        //   Animation.PlayMode okayMode = Animation.PlayMode.LOOP;
 
 
-      //  TextureAtlas atlas = new TextureAtlas(Gdx.files.internal(atlasLocation));
+        //  TextureAtlas atlas = new TextureAtlas(Gdx.files.internal(atlasLocation));
 
-       // regions = new Array<TextureAtlas.AtlasRegion>(atlas.getRegions());
-       // idleRegion = new Array<TextureAtlas.AtlasRegion>();
+        // regions = new Array<TextureAtlas.AtlasRegion>(atlas.getRegions());
+        // idleRegion = new Array<TextureAtlas.AtlasRegion>();
 
 //        for (int i = 0; i < 3; i++) {
 //            idleRegion.add(regions.pop());
 //
 //        }
 
-      //  animationInit(idleRegion, okayMode);
+        //  animationInit(idleRegion, okayMode);
         createAnimArrays();
         this.setPosition(position.x, position.y);
         initTweenData();
@@ -68,29 +70,70 @@ public class CarSprite extends BonusSprite {
 
 
     }
+
+
+    @Override
+    public void update(float deltaTime) {
+        StateTimer += Gdx.graphics.getDeltaTime();
+        super.update(StateTimer);
+        this.setX(tweenData.getXY().x);
+        this.setY(tweenData.getXY().y);
+        this.setColor(tweenData.getColour());
+        this.setScale(tweenData.getScale());
+        this.setRotation(tweenData.getRotation());
+    }
+
+
+
     public void destroyRoutine() {
-
-        Tween.to(tweenData, TweenDataAccessor.TYPE_POS, 25f)
+        float crashTimer = 300f;
+        //seperate crash and movement for game
+        Tween.to(tweenData, TweenDataAccessor.TYPE_POS, crashTimer)
                 .target(300, tweenData.getXY().y).start(tweenManager)
-                .to(tweenData,TweenDataAccessor.TYPE_COLOUR,200f)
-                .target(.15f,.15f,.15f,.0f)
-                .start(tweenManager);
 
+                //faid
+                .to(tweenData,TweenDataAccessor.TYPE_COLOUR,0.5f).delay(800f)
+                .target(.15f,.15f,.15f,.0f)
+                .start(tweenManager)
+
+                //crash rotations
+                .to(tweenData, TweenDataAccessor.TYPE_ROTATION,50f).delay(crashTimer)
+                .target(120).start().start(tweenManager)
+                .to(tweenData, TweenDataAccessor.TYPE_ROTATION,350f).delay(crashTimer+ 170)
+                .target(330).start().start(tweenManager)
+
+                //crash scale
+                .to(tweenData, TweenDataAccessor.TYPE_SCALE,100f).delay(crashTimer + 30)
+                .target(1.5f).start().start(tweenManager)
+                .to(tweenData, TweenDataAccessor.TYPE_SCALE,300f).delay(crashTimer + 170)
+                .target(7f).start().start(tweenManager)
+                //crash movement
+                .to(tweenData, TweenDataAccessor.TYPE_POS, 100f).delay(crashTimer)
+                .target(200, tweenData.getXY().y+300).start(tweenManager)
+                .to(tweenData, TweenDataAccessor.TYPE_POS, 100f).delay(crashTimer + 100f)
+                .target(200, tweenData.getXY().y+200).start(tweenManager);
 
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
                 changeAnimation();
             }
-        },0.2f);
+        },crashTimer/100);
     }
+
+//    public void faidRoutine(){
+//        Tween.to(tweenData, TweenDataAccessor.TYPE_POS, 250f)
+//    }
+
+
+
     public void changeAnimation(){
         animationInit(deathRegion, Animation.PlayMode.NORMAL);
-        super.update(0);
+        StateTimer =0;
     }
 
     private float randomY(){
-      //  return MathUtils.random(Constants.SCENE_HEIGHT, 0);
+        //return MathUtils.random(Constants.SCENE_HEIGHT, 0);
         return 5;
     }
 }
