@@ -13,7 +13,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 
+import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenManager;
 
 /**
@@ -106,25 +108,21 @@ public class CarSprite extends BonusSprite {
                 //crash scale
                 .to(tweenData, TweenDataAccessor.TYPE_SCALE,100f).delay(crashTimer + 30)
                 .target(1.5f).start().start(tweenManager)
-                .to(tweenData, TweenDataAccessor.TYPE_SCALE,300f).delay(crashTimer + 170)
-                .target(7f).start().start(tweenManager)
+
                 //crash movement
-                .to(tweenData, TweenDataAccessor.TYPE_POS, 100f).delay(crashTimer)
+                .to(tweenData, TweenDataAccessor.TYPE_POS, 100f).delay(crashTimer).setCallback(new TweenCallback() {
+            @Override
+            public void onEvent(int type, BaseTween<?> source) {
+                changeAnimation();
+            }
+        })
                 .target(200, tweenData.getXY().y+300).start(tweenManager)
                 .to(tweenData, TweenDataAccessor.TYPE_POS, 100f).delay(crashTimer + 100f)
                 .target(200, tweenData.getXY().y+200).start(tweenManager);
 
-        Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                changeAnimation();
-            }
-        },crashTimer/100);
     }
 
-//    public void faidRoutine(){
-//        Tween.to(tweenData, TweenDataAccessor.TYPE_POS, 250f)
-//    }
+
 
 
 

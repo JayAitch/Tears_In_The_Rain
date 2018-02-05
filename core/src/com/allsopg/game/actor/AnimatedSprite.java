@@ -23,7 +23,7 @@ public class AnimatedSprite extends Sprite {
 
 
     public AnimatedSprite(String atlasString, Texture t, Animation.PlayMode loopType) {
-        super(t);
+      //  super(t);
         atlas = new TextureAtlas(Gdx.files.internal(atlasString));
         Array<TextureAtlas.AtlasRegion> regions = new
                 Array<TextureAtlas.AtlasRegion>(atlas.getRegions());
