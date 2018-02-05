@@ -1,5 +1,6 @@
 package com.allsopg.game.actor;
 
+import com.allsopg.game.sound.SoundLink;
 import com.allsopg.game.utility.Constants;
 import com.allsopg.game.utility.TweenData;
 
@@ -28,28 +29,16 @@ public class CarSprite extends BonusSprite {
     private Array<TextureAtlas.AtlasRegion> idleRegion;
     private Array<TextureAtlas.AtlasRegion> deathRegion;
     private float StateTimer;
-    private Boolean dead;
+    //private Boolean dead;
+    private SoundLink soundLink;
     public CarSprite(Texture t) {
         super(t);
-        // String atlasLocation = "gfx/MobCar/mob_car.atlas";
         Vector2 position = new Vector2(5, randomY());
-        //   Animation.PlayMode okayMode = Animation.PlayMode.LOOP;
 
-
-        //  TextureAtlas atlas = new TextureAtlas(Gdx.files.internal(atlasLocation));
-
-        // regions = new Array<TextureAtlas.AtlasRegion>(atlas.getRegions());
-        // idleRegion = new Array<TextureAtlas.AtlasRegion>();
-
-//        for (int i = 0; i < 3; i++) {
-//            idleRegion.add(regions.pop());
-//
-//        }
-
-        //  animationInit(idleRegion, okayMode);
         createAnimArrays();
         this.setPosition(position.x, position.y);
         initTweenData();
+        soundLink = new SoundLink();
     }
 
 
@@ -99,7 +88,12 @@ public class CarSprite extends BonusSprite {
                 .start(tweenManager)
 
                 //crash rotations
-                .to(tweenData, TweenDataAccessor.TYPE_ROTATION,50f).delay(crashTimer)
+                .to(tweenData, TweenDataAccessor.TYPE_ROTATION,50f).setCallback(new TweenCallback() {
+            @Override
+            public void onEvent(int type, BaseTween<?> source) {
+                soundLink.play(SoundLink.SoundEnum.CRASHSND);
+            }
+        }).delay(crashTimer)
                 .target(120).start().start(tweenManager)
 
                 .to(tweenData, TweenDataAccessor.TYPE_ROTATION,350f).delay(crashTimer+ 170)
@@ -114,6 +108,7 @@ public class CarSprite extends BonusSprite {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
                 changeAnimation();
+                soundLink.play(SoundLink.SoundEnum.EXPLODESND);
             }
         })
                 .target(200, tweenData.getXY().y+300).start(tweenManager)
