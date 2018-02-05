@@ -67,11 +67,11 @@ public class CarSprite extends BonusSprite {
     public void update(float deltaTime) {
         StateTimer += Gdx.graphics.getDeltaTime();
         super.update(StateTimer);
-        this.setX(tweenData.getXY().x);
-        this.setY(tweenData.getXY().y);
-        this.setColor(tweenData.getColour());
-        this.setScale(tweenData.getScale());
-        this.setRotation(tweenData.getRotation());
+//        this.setX(tweenData.getXY().x);
+//        this.setY(tweenData.getXY().y);
+//        this.setColor(tweenData.getColour());
+//        this.setScale(tweenData.getScale());
+//        this.setRotation(tweenData.getRotation());
     }
 
 
@@ -88,12 +88,14 @@ public class CarSprite extends BonusSprite {
                 .start(tweenManager)
 
                 //crash rotations
-                .to(tweenData, TweenDataAccessor.TYPE_ROTATION,50f).setCallback(new TweenCallback() {
+                .to(tweenData, TweenDataAccessor.TYPE_ROTATION,50f)
+                .setCallback(new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
                 soundLink.play(SoundLink.SoundEnum.CRASHSND);
             }
-        }).delay(crashTimer)
+        })
+                .delay(crashTimer)
                 .target(120).start().start(tweenManager)
 
                 .to(tweenData, TweenDataAccessor.TYPE_ROTATION,350f).delay(crashTimer+ 170)
@@ -104,7 +106,8 @@ public class CarSprite extends BonusSprite {
                 .target(1.5f).start().start(tweenManager)
 
                 //crash movement
-                .to(tweenData, TweenDataAccessor.TYPE_POS, 100f).delay(crashTimer).setCallback(new TweenCallback() {
+                .to(tweenData, TweenDataAccessor.TYPE_POS, 100f).delay(crashTimer)
+                .setCallback(new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
                 changeAnimation();
