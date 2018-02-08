@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 /**
+ * simple class to generate bitmapped fonts for drawing
  * Created by Jordan Harrison on 08/02/2018.
  */
 public class FontDrawer {
