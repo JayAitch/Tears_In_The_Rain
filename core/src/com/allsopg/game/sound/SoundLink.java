@@ -15,6 +15,7 @@ public class SoundLink {
         EXPLODESND, CRASHSND
     }
     public SoundLink(){
+        // create array for sounds and store within an array
         soundKeys = new IntMap<Sound>();
 
         Sound explodeSnd = Gdx.audio.newSound(Gdx.files.internal("sfx/explode.ogg"));
@@ -25,6 +26,8 @@ public class SoundLink {
     }
 
     public boolean play(SoundEnum soundEnum){
+        //state machine to chose sound to play
+        //enum driven for clarity when calling
         Sound sound;
         switch (soundEnum){
             case EXPLODESND:
@@ -38,13 +41,15 @@ public class SoundLink {
                 sound = soundKeys.get(1);
                 break;
         }
-       // Sound sound = soundKeys.get(keyCode);
+       // pre enum method was driven using index param passed in Sound sound = soundKeys.get(keyCode);
+        //check to see if sound has been stored
         if(sound != null){
             sound.play();
             return true;
         }
         return false;
     }
+    //dispose sound array
     public void dispose(){
         for (Sound sound: soundKeys.values())
             sound.dispose();

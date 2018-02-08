@@ -25,15 +25,14 @@ import aurelienribon.tweenengine.TweenManager;
 public class BonusSprite extends AnimatedSprite {
     protected TweenData tweenData;
     protected TweenManager tweenManager;
-    protected float StateTime;
-
+//base constructor for one regions
     public BonusSprite(String atlasString, Texture t, Vector2 pos, Animation.PlayMode loopType) {
         super(atlasString, t, loopType);
         this.setPosition(pos.x, pos.y);
         initTweenData();
 
     }
-
+//default constructor for derived classes in the case where i will be creating multiple regions
     public BonusSprite(Texture t) {
         super(t);
     }
@@ -47,12 +46,12 @@ public class BonusSprite extends AnimatedSprite {
     }
 
 
-
+//fetching tween data
     private TweenData getTweenData() {
         return tweenData;
     }
 
-
+//update method for tweening
     @Override
     public void update(float stateTime) {
         super.update(stateTime);

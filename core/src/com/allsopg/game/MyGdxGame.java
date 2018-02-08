@@ -26,20 +26,22 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	@Override
 	public void create () {
+		//populate camera, view and batch references
 		camera = new OrthographicCamera();
 		view = new FitViewport(800,600,camera);
 		batch = new SpriteBatch();
+		//assign sizing textures from files
 		Texture small = new Texture(Gdx.files.internal("gfx/smallSize.png"));
 		Texture medium = new Texture(Gdx.files.internal("gfx/mediumSize.png"));
 		Texture carSize = new Texture(Gdx.files.internal("gfx/carSize.png"));
+		//create new carsprite and run routine
         bp = new CarSprite(carSize);
-//				new BonusSprite("gfx/MobCar/mob_car.atlas",medium,
-//				new Vector2(Constants.SCENE_WIDTH/2,Constants.SCENE_HEIGHT/2), Animation.PlayMode.LOOP);
         bp.destroyRoutine();
 
 	}
 	@Override
 	public void render () {
+		//setting up clear colour and batch render
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         animationTime +=Gdx.graphics.getDeltaTime();
