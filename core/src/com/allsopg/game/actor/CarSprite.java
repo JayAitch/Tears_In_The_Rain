@@ -1,23 +1,19 @@
 package com.allsopg.game.actor;
 
+import com.allsopg.game.font.FontDrawer;
 import com.allsopg.game.sound.SoundLink;
-import com.allsopg.game.utility.Constants;
-import com.allsopg.game.utility.TweenData;
 
 import com.allsopg.game.utility.TweenDataAccessor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Timer;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
-import aurelienribon.tweenengine.TweenManager;
 
 /**
  * Created by Jordan Harrison on 06/01/2018.
@@ -29,8 +25,9 @@ public class CarSprite extends BonusSprite {
     private Array<TextureAtlas.AtlasRegion> idleRegion;
     private Array<TextureAtlas.AtlasRegion> deathRegion;
     private float StateTimer;
-    //private Boolean dead;
+
     private SoundLink soundLink;
+    public FontDrawer drawFont;
     public CarSprite(Texture t) {
         super(t);
         Vector2 position = new Vector2(5, randomY());
@@ -39,6 +36,7 @@ public class CarSprite extends BonusSprite {
         this.setPosition(position.x, position.y);
         initTweenData();
         soundLink = new SoundLink();
+        drawFont = new FontDrawer("1up");
     }
 
 
@@ -93,6 +91,7 @@ public class CarSprite extends BonusSprite {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
                 soundLink.play(SoundLink.SoundEnum.CRASHSND);
+                drawFont.drawText(tweenData.getXY().y,tweenData.getXY().x);
             }
         })
                 .delay(crashTimer)

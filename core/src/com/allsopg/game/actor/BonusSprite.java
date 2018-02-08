@@ -31,6 +31,7 @@ public class BonusSprite extends AnimatedSprite {
         super(atlasString, t, loopType);
         this.setPosition(pos.x, pos.y);
         initTweenData();
+
     }
 
     public BonusSprite(Texture t) {
@@ -62,11 +63,4 @@ public class BonusSprite extends AnimatedSprite {
         this.setRotation(tweenData.getRotation());
     }
 
-//    public void destroyRoutine() {
-//        System.out.print(Constants.VIEWPORT_WIDTH);
-//        Tween.to(tweenData, TweenDataAccessor.TYPE_POS, 250f)
-//                .target(Constants.SCENE_WIDTH-100, tweenData.getXY().y).start(tweenManager);
-//
-//
-//    }
 }

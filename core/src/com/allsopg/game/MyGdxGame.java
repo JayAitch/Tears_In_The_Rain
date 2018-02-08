@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -22,6 +23,7 @@ public class MyGdxGame extends ApplicationAdapter {
     private SpriteBatch batch;
     private CarSprite bp;
     private float animationTime;
+
 	@Override
 	public void create () {
 		camera = new OrthographicCamera();
@@ -38,12 +40,12 @@ public class MyGdxGame extends ApplicationAdapter {
 	}
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 0);
+		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         animationTime +=Gdx.graphics.getDeltaTime();
         UniversalResource.getInstance().tweenManager.update(animationTime);
         batch.begin();
-        bp.update(animationTime);
+	    bp.update(animationTime);
         bp.draw(batch);
 		batch.end();
 	}
