@@ -7,6 +7,7 @@ import com.allsopg.game.utility.TweenDataAccessor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -29,7 +30,7 @@ public class CarSprite extends BonusSprite {
     //state timer to control animation position
     private float StateTimer;
     private SoundLink soundLink;
-    public FontDrawer drawFont;
+
     //CarSprite constructor super(t) is called for sizing via textures
     public CarSprite(Texture t) {
         super(t);
@@ -37,9 +38,8 @@ public class CarSprite extends BonusSprite {
         createAnimArrays();
         this.setPosition(position.x, position.y);
         initTweenData();
-        //creating new soundlink and drawfont
+        //creating new soundlink
         soundLink = new SoundLink();
-        drawFont = new FontDrawer("-1up");
     }
 
 
@@ -89,7 +89,6 @@ public class CarSprite extends BonusSprite {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
                 soundLink.play(SoundLink.SoundEnum.CRASHSND);
-                drawFont.drawText(tweenData.getXY().y,tweenData.getXY().x);
             }
         })
                 .delay(crashTimer)
@@ -102,15 +101,14 @@ public class CarSprite extends BonusSprite {
                 .to(tweenData, TweenDataAccessor.TYPE_SCALE,100f).delay(crashTimer + 30)
                 .target(1.5f).start().start(tweenManager)
 
-                //crash movement
+               //crash movement
                 .to(tweenData, TweenDataAccessor.TYPE_POS, 100f).delay(crashTimer)
                 .setCallback(new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
                 changeAnimation();
                 soundLink.play(SoundLink.SoundEnum.EXPLODESND);
-                drawFont.dispose();
-            }
+                            }
         })
                 .target(200, tweenData.getXY().y+300).start(tweenManager)
                 .to(tweenData, TweenDataAccessor.TYPE_POS, 100f).delay(crashTimer + 100f)
@@ -130,7 +128,7 @@ public class CarSprite extends BonusSprite {
     }
 // this method could be used to spawn the cards in different places
     private float randomY(){
-        //return MathUtils.random(Constants.SCENE_HEIGHT, 0);
+        //return MathUtils.random(Constants.SCENE_HEIGHT, Constants.SCENE_HEIGHT/2);
         return 5;
     }
 }

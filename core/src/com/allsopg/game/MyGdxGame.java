@@ -3,6 +3,7 @@ package com.allsopg.game;
 import com.allsopg.game.actor.AnimatedSprite;
 import com.allsopg.game.actor.BonusSprite;
 import com.allsopg.game.actor.CarSprite;
+import com.allsopg.game.font.FontDrawer;
 import com.allsopg.game.utility.Constants;
 import com.allsopg.game.utility.UniversalResource;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -23,7 +25,8 @@ public class MyGdxGame extends ApplicationAdapter {
     private SpriteBatch batch;
     private CarSprite bp;
     private float animationTime;
-
+	private FontDrawer fontDrawer;
+	private Boolean isDead = false;
 	@Override
 	public void create () {
 		//populate camera, view and batch references
@@ -37,6 +40,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		//create new carsprite and run routine
         bp = new CarSprite(carSize);
         bp.destroyRoutine();
+		fontTimer();
+
+		fontDrawer = new FontDrawer("-1UP");
 
 	}
 	@Override
@@ -47,6 +53,9 @@ public class MyGdxGame extends ApplicationAdapter {
         animationTime +=Gdx.graphics.getDeltaTime();
         UniversalResource.getInstance().tweenManager.update(animationTime);
         batch.begin();
+		if(isDead) {
+			fontDrawer.drawText(batch, bp.getY() + bp.getHeight(), bp.getX());
+		}
 	    bp.update(animationTime);
         bp.draw(batch);
 		batch.end();
@@ -55,4 +64,19 @@ public class MyGdxGame extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 	}
+	public void fontTimer(){
+		Timer.schedule(new Timer.Task() {
+			@Override
+			public void run() {
+				isDead = true;
+			}
+		},3.2f);
+		Timer.schedule(new Timer.Task() {
+			@Override
+			public void run() {
+				isDead = false;
+			}
+		},4.2f);
+	}
 }
+
