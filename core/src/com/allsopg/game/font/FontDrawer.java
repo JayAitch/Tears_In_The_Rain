@@ -1,7 +1,5 @@
 package com.allsopg.game.font;
-
 import com.badlogic.gdx.Gdx;
-
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -23,7 +21,6 @@ public class FontDrawer {
     }
     //local draw method that can take the sprites position
     public void drawText(SpriteBatch batch,float yLocation, float xLocation){
-
         font.draw(batch, text,xLocation,yLocation);
 
     }

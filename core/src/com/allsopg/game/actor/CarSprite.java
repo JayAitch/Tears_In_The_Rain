@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
@@ -27,6 +28,7 @@ public class CarSprite extends BonusSprite {
     private Array<TextureAtlas.AtlasRegion> regions;
     private Array<TextureAtlas.AtlasRegion> idleRegion;
     private Array<TextureAtlas.AtlasRegion> deathRegion;
+  //  private animationRegions;
     //state timer to control animation position
     private float StateTimer;
     private SoundLink soundLink;
@@ -52,6 +54,7 @@ public class CarSprite extends BonusSprite {
         regions = new Array<TextureAtlas.AtlasRegion>(atlas.getRegions());
         idleRegion = new Array<TextureAtlas.AtlasRegion>();
         deathRegion = new Array<TextureAtlas.AtlasRegion>();
+       // animationRegions = new array<Array<TextureAtlas.AtlasRegion>>();
         for (int i = 0; i < 3; i++) {
             idleRegion.add(regions.pop());
         }
@@ -63,8 +66,9 @@ public class CarSprite extends BonusSprite {
 
     }
 
-// i am overriding the initial update method in order to reset the animation timer to the start
-    //when i switch the animation over
+    //overriding the initial update method
+    // to reset the animation timer to the start
+    //when the animation is switched over
     @Override
     public void update(float deltaTime) {
         StateTimer += Gdx.graphics.getDeltaTime();
@@ -126,7 +130,7 @@ public class CarSprite extends BonusSprite {
         animationInit(deathRegion, Animation.PlayMode.NORMAL);
         StateTimer =0;
     }
-// this method could be used to spawn the cards in different places
+// this method could be used to spawn the cars in different places
     private float randomY(){
         //return MathUtils.random(Constants.SCENE_HEIGHT, Constants.SCENE_HEIGHT/2);
         return 5;

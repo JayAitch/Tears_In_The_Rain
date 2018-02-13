@@ -23,7 +23,7 @@ public class AnimatedSprite extends Sprite {
 
 //create and sort texture regions for animating
     public AnimatedSprite(String atlasString, Texture t, Animation.PlayMode loopType) {
-      //  super(t);
+        super(t);
         atlas = new TextureAtlas(Gdx.files.internal(atlasString));
         Array<TextureAtlas.AtlasRegion> regions = new
                 Array<TextureAtlas.AtlasRegion>(atlas.getRegions());
@@ -45,7 +45,7 @@ public class AnimatedSprite extends Sprite {
     public void update(float deltaTime) {
         this.setRegion((TextureAtlas.AtlasRegion) animation.getKeyFrame(deltaTime));
     }
-//region comparitor for sorting
+//region comparator inner class for sorting
     private static class RegionComparator implements Comparator<TextureAtlas.AtlasRegion> {
 
         @Override

@@ -1,20 +1,15 @@
 package com.allsopg.game;
 
-import com.allsopg.game.actor.AnimatedSprite;
-import com.allsopg.game.actor.BonusSprite;
+
 import com.allsopg.game.actor.CarSprite;
 import com.allsopg.game.font.FontDrawer;
-import com.allsopg.game.utility.Constants;
 import com.allsopg.game.utility.UniversalResource;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -42,7 +37,7 @@ public class MyGdxGame extends ApplicationAdapter {
         bp.destroyRoutine();
 		fontTimer();
 
-		fontDrawer = new FontDrawer("-1UP");
+		fontDrawer = new FontDrawer("-1HP");
 
 	}
 	@Override
@@ -56,6 +51,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		if(isDead) {
 			fontDrawer.drawText(batch, bp.getY() + bp.getHeight(), bp.getX());
 		}
+
 	    bp.update(animationTime);
         bp.draw(batch);
 		batch.end();
