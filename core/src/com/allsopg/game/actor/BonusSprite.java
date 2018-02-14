@@ -30,10 +30,10 @@ public class BonusSprite extends AnimatedSprite {
         super(atlasString, t, loopType);
         this.setPosition(pos.x, pos.y);
         initTweenData();
-
     }
-//default constructor for derived classes in the case where i will be creating multiple regions
-    public BonusSprite(Texture t) {
+
+    //default constructor for derived classes in the case where i will be creating multiple regions
+    protected BonusSprite(Texture t) {
         super(t);
     }
 

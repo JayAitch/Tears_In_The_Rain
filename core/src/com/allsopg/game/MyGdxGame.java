@@ -1,7 +1,7 @@
 package com.allsopg.game;
 
 
-import com.allsopg.game.actor.CarSprite;
+import com.allsopg.game.actor.MultiRegionSprite;
 import com.allsopg.game.font.FontDrawer;
 import com.allsopg.game.utility.UniversalResource;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -18,7 +18,7 @@ public class MyGdxGame extends ApplicationAdapter {
     private OrthographicCamera camera;
     private Viewport view;
     private SpriteBatch batch;
-    private CarSprite bp;
+    private MultiRegionSprite bp;
     private float animationTime;
 	private FontDrawer fontDrawer;
 	private Boolean isDead = false;
@@ -33,7 +33,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		Texture medium = new Texture(Gdx.files.internal("gfx/mediumSize.png"));
 		Texture carSize = new Texture(Gdx.files.internal("gfx/carSize.png"));
 		//create new carsprite and run routine
-        bp = new CarSprite(carSize);
+        bp = new MultiRegionSprite(carSize, "gfx/MobCar/mob_car.atlas");
         bp.destroyRoutine();
 		fontTimer();
 

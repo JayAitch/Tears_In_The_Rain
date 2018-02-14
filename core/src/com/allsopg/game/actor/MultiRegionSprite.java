@@ -23,21 +23,21 @@ import aurelienribon.tweenengine.TweenCallback;
  * Created by Jordan Harrison on 06/01/2018.
  */
 
-public class CarSprite extends BonusSprite {
+public class MultiRegionSprite extends BonusSprite {
 //regions contains all the regions and idle and death regions will be populated via regions
     private Array<TextureAtlas.AtlasRegion> regions;
     private Array<TextureAtlas.AtlasRegion> idleRegion;
     private Array<TextureAtlas.AtlasRegion> deathRegion;
-  //  private animationRegions;
+
     //state timer to control animation position
     private float StateTimer;
     private SoundLink soundLink;
 
-    //CarSprite constructor super(t) is called for sizing via textures
-    public CarSprite(Texture t) {
+    //MultiRegionSprite constructor super(t) is called for sizing via textures
+    public MultiRegionSprite(Texture t, String atlasString) {
         super(t);
         Vector2 position = new Vector2(5, randomY());
-        createAnimArrays();
+        createAnimArrays(atlasString);
         this.setPosition(position.x, position.y);
         initTweenData();
         //creating new soundlink
@@ -47,20 +47,20 @@ public class CarSprite extends BonusSprite {
 
 //generating two seperate region from the initial region containing the whole atlas
     //in order to have 2 animations to switch between
-    public void createAnimArrays(){
-        String atlasLocation = "gfx/MobCar/mob_car.atlas";
-        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal(atlasLocation));
+    public void createAnimArrays(String atlasString){
+        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal(atlasString));
 
         regions = new Array<TextureAtlas.AtlasRegion>(atlas.getRegions());
         idleRegion = new Array<TextureAtlas.AtlasRegion>();
         deathRegion = new Array<TextureAtlas.AtlasRegion>();
-       // animationRegions = new array<Array<TextureAtlas.AtlasRegion>>();
+
         for (int i = 0; i < 3; i++) {
             idleRegion.add(regions.pop());
         }
         for(int i = 0; i < 12; i++){
             deathRegion.add(regions.pop());
         }
+
         animationInit(idleRegion, Animation.PlayMode.LOOP);
 
 
