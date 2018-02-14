@@ -18,7 +18,7 @@ public class MyGdxGame extends ApplicationAdapter {
     private OrthographicCamera camera;
     private Viewport view;
     private SpriteBatch batch;
-    private MultiRegionSprite bp;
+    private MultiRegionSprite multiRegionSprite;
     private float animationTime;
 	private FontDrawer fontDrawer;
 	private Boolean isDead = false;
@@ -33,8 +33,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		Texture medium = new Texture(Gdx.files.internal("gfx/mediumSize.png"));
 		Texture carSize = new Texture(Gdx.files.internal("gfx/carSize.png"));
 		//create new carsprite and run routine
-        bp = new MultiRegionSprite(carSize, "gfx/MobCar/mob_car.atlas");
-        bp.destroyRoutine();
+		int[] regionLengths= {4,13};
+        multiRegionSprite = new MultiRegionSprite(carSize, "gfx/MobCar/mob_car.atlas",regionLengths);
+        multiRegionSprite.destroyRoutine();
 		fontTimer();
 
 		fontDrawer = new FontDrawer("-1HP");
@@ -49,11 +50,11 @@ public class MyGdxGame extends ApplicationAdapter {
         UniversalResource.getInstance().tweenManager.update(animationTime);
         batch.begin();
 		if(isDead) {
-			fontDrawer.drawText(batch, bp.getY() + bp.getHeight(), bp.getX());
+			fontDrawer.drawText(batch, multiRegionSprite.getY() + multiRegionSprite.getHeight(), multiRegionSprite.getX());
 		}
 
-	    bp.update(animationTime);
-        bp.draw(batch);
+	    multiRegionSprite.update(animationTime);
+        multiRegionSprite.draw(batch);
 		batch.end();
 	}
 	@Override

@@ -30,21 +30,16 @@ import aurelienribon.tweenengine.TweenCallback;
 public class MultiRegionSprite extends BonusSprite {
 //regions contains all the regions and idle and death regions will be populated via regions
     private Array<TextureAtlas.AtlasRegion> regions;
-    private Array<TextureAtlas.AtlasRegion> idleRegion;
-    private Array<TextureAtlas.AtlasRegion> deathRegion;
     private Map<Integer,Array<TextureAtlas.AtlasRegion>> animationRegions;
     //state timer to control animation position
     private float StateTimer;
     private SoundLink soundLink;
     private int[] arraytest;
     //MultiRegionSprite constructor super(t) is called for sizing via textures
-    public MultiRegionSprite(Texture t, String atlasString) {
+    public MultiRegionSprite(Texture t, String atlasString,int[] regionLengths) {
         super(t);
         Vector2 position = new Vector2(5, randomY());
-        arraytest= new int[2];
-        arraytest[0] = 4;
-        arraytest[1] = 13;
-        createAnimArrays(atlasString,arraytest);
+        createAnimArrays(atlasString,regionLengths);
         this.setPosition(position.x, position.y);
         initTweenData();
         //creating new soundlink
@@ -55,30 +50,17 @@ public class MultiRegionSprite extends BonusSprite {
     //in order to have 2 animations to switch between
     public void createAnimArrays(String atlasString, int[]regionLengths){
         TextureAtlas atlas = new TextureAtlas(Gdx.files.internal(atlasString));
-
         regions = new Array<TextureAtlas.AtlasRegion>(atlas.getRegions());
         regions.sort(new RegionComparator());
-
-        idleRegion = new Array<TextureAtlas.AtlasRegion>();
-        deathRegion = new Array<TextureAtlas.AtlasRegion>();
         animationRegions = new HashMap<Integer, Array<TextureAtlas.AtlasRegion>>();
 
-        System.out.println(regionLengths[0]+" "+" " +regionLengths[1]);
-        System.out.println("regions size:"+regions.size);
-        System.out.println("regionlengths length:"+regionLengths.length);
-
         for(int i = 0; i < regionLengths.length; i++) {
-            System.out.println("increment for region lengths"+";"+i);
             Array<TextureAtlas.AtlasRegion> tempRegion = new Array<TextureAtlas.AtlasRegion>();
           for(int i2 = 0; i2 < regionLengths[i]; i2++) {
-              System.out.println("region length" +":"+ regionLengths[i]);
               tempRegion.add(regions.pop());
-              System.out.println("temp region size"+ tempRegion.size);
 
            }
-
             animationRegions.put(i,tempRegion);
-            System.out.println("get size" + animationRegions.get(i).size);
         }
 
 
