@@ -47,7 +47,7 @@ public abstract class AnimatedSprite extends Sprite {
         this.setRegion((TextureAtlas.AtlasRegion) animation.getKeyFrame(deltaTime));
     }
 //region comparator inner class for sorting
-    private static class RegionComparator implements Comparator<TextureAtlas.AtlasRegion> {
+    protected static class RegionComparator implements Comparator<TextureAtlas.AtlasRegion> {
 
         @Override
         public int compare(TextureAtlas.AtlasRegion region1, TextureAtlas.AtlasRegion region2) {
