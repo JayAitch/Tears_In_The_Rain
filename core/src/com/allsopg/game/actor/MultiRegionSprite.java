@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ArrayMap;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
@@ -28,7 +29,7 @@ public class MultiRegionSprite extends BonusSprite {
     private Array<TextureAtlas.AtlasRegion> regions;
     private Array<TextureAtlas.AtlasRegion> idleRegion;
     private Array<TextureAtlas.AtlasRegion> deathRegion;
-
+    private ArrayMap<Integer,Array<TextureAtlas.AtlasRegion>> animationRegions;
     //state timer to control animation position
     private float StateTimer;
     private SoundLink soundLink;
@@ -53,15 +54,16 @@ public class MultiRegionSprite extends BonusSprite {
         regions = new Array<TextureAtlas.AtlasRegion>(atlas.getRegions());
         idleRegion = new Array<TextureAtlas.AtlasRegion>();
         deathRegion = new Array<TextureAtlas.AtlasRegion>();
-
+        animationRegions = new ArrayMap<Integer, Array<TextureAtlas.AtlasRegion>>();
         for (int i = 0; i < 3; i++) {
             idleRegion.add(regions.pop());
         }
         for(int i = 0; i < 12; i++){
             deathRegion.add(regions.pop());
         }
-
-        animationInit(idleRegion, Animation.PlayMode.LOOP);
+        animationRegions.put(0,idleRegion);
+        animationRegions.put(1,deathRegion);
+        animationInit(animationRegions.get(0), Animation.PlayMode.LOOP);
 
 
     }
@@ -127,7 +129,7 @@ public class MultiRegionSprite extends BonusSprite {
     // i am changing the playmode to prevent the death animation looping
     // i aim to extend this method to accept a region to change to allowing switching back and fourth
     public void changeAnimation(){
-        animationInit(deathRegion, Animation.PlayMode.NORMAL);
+        animationInit(animationRegions.get(1), Animation.PlayMode.NORMAL);
         StateTimer =0;
     }
 // this method could be used to spawn the cars in different places
