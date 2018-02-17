@@ -34,7 +34,7 @@ public class MultiRegionSprite extends BonusSprite {
     //state timer to control animation position
     private float StateTimer;
     private SoundLink soundLink;
-    private int[] arraytest;
+    
     //MultiRegionSprite constructor super(t) is called for sizing via textures
     public MultiRegionSprite(Texture t, String atlasString,int[] regionLengths) {
         super(t);
@@ -45,10 +45,10 @@ public class MultiRegionSprite extends BonusSprite {
         //creating new soundlink
         soundLink = new SoundLink();
     }
-//private Array<TextureAtlas.AtlasRegion> tempRegion;
 //generating two seperate region from the initial region containing the whole atlas
-    //in order to have 2 animations to switch between
-    public void createAnimArrays(String atlasString, int[]regionLengths){
+//in order to have 2 animations to switch between
+    //changed method further to accept an array of integars to assign animation regions
+    private void createAnimArrays(String atlasString, int[]regionLengths){
         TextureAtlas atlas = new TextureAtlas(Gdx.files.internal(atlasString));
         regions = new Array<TextureAtlas.AtlasRegion>(atlas.getRegions());
         regions.sort(new RegionComparator());
@@ -62,17 +62,6 @@ public class MultiRegionSprite extends BonusSprite {
            }
             animationRegions.put(i,tempRegion);
         }
-
-
-//        for (int i = 0; i < 3; i++) {
-//            idleRegion.add(regions.pop());
-//        }
-//        for(int i = 0; i < 12; i++){
-//            deathRegion.add(regions.pop());
-//        }
-//        animationRegions.put(0,idleRegion);
-//        animationRegions.put(1,deathRegion);
-        System.out.println("outside of loop animation regions get:"+ animationRegions.get(0).size);
         animationInit(animationRegions.get(0), Animation.PlayMode.LOOP);
     }
 
@@ -126,7 +115,7 @@ public class MultiRegionSprite extends BonusSprite {
         })
                 .target(200, tweenData.getXY().y+300).start(tweenManager)
                 .to(tweenData, TweenDataAccessor.TYPE_POS, 100f).delay(crashTimer + 100f)
-                .target(200, tweenData.getXY().y+200).start(tweenManager);
+                .target(200, tweenData.getXY().y).start(tweenManager);
 
     }
 
@@ -136,7 +125,7 @@ public class MultiRegionSprite extends BonusSprite {
 //change the animation and set the StateTimer to 0 to play from the beginging
     // i am changing the playmode to prevent the death animation looping
     // i aim to extend this method to accept a region to change to allowing switching back and fourth
-    public void changeAnimation(){
+    private void changeAnimation(){
         animationInit(animationRegions.get(1), Animation.PlayMode.NORMAL);
         StateTimer =0;
     }
